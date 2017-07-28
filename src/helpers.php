@@ -2,7 +2,7 @@
 
 namespace Spatie\SslCertificate;
 
-function starts_with($haystack, $needles): bool
+function starts_with($haystack, $needles)
 {
     foreach ((array) $needles as $needle) {
         if ($needle != '' && mb_strpos($haystack, $needle) === 0) {
@@ -21,7 +21,7 @@ function starts_with($haystack, $needles): bool
  *
  * @return bool
  */
-function ends_with(string $haystack, $needles): bool
+function ends_with(string $haystack, $needles)
 {
     foreach ((array) $needles as $needle) {
         if ((string) $needle === substr($haystack, -length($needle))) {
@@ -41,7 +41,7 @@ function ends_with(string $haystack, $needles): bool
  *
  * @return string
  */
-function substr(string $string, int $start, int $length = null): string
+function substr(string $string, int $start, int $length = null)
 {
     return mb_substr($string, $start, $length, 'UTF-8');
 }
@@ -53,7 +53,7 @@ function substr(string $string, int $start, int $length = null): string
  *
  * @return int
  */
-function length(string $value): int
+function length(string $value)
 {
     return mb_strlen($value);
 }
@@ -66,7 +66,7 @@ function length(string $value): int
  *
  * @return bool
  */
-function str_contains(string $haystack, $needles): bool
+function str_contains(string $haystack, $needles)
 {
     foreach ((array) $needles as $needle) {
         if ($needle != '' && mb_strpos($haystack, $needle) !== false) {

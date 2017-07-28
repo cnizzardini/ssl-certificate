@@ -31,7 +31,7 @@ class Url
         }
     }
 
-    public function getHostName(): string
+    public function getHostName()
     {
         return $this->parsedUrl['host'];
     }

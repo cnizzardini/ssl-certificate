@@ -9,12 +9,12 @@ class SslCertificate
     /** @var array */
     protected $rawCertificateFields = [];
 
-    public static function download(): Downloader
+    public static function download()
     {
         return new Downloader();
     }
 
-    public static function createForHostName(string $url, int $timeout = 30): SslCertificate
+    public static function createForHostName(string $url, int $timeout = 30)
     {
         $sslCertificate = Downloader::downloadCertificateFromUrl($url, $timeout);
 
@@ -26,7 +26,7 @@ class SslCertificate
         $this->rawCertificateFields = $rawCertificateFields;
     }
 
-    public function getRawCertificateFields(): array
+    public function getRawCertificateFields()
     {
         return $this->rawCertificateFields;
     }
@@ -46,7 +46,7 @@ class SslCertificate
         return $this->rawCertificateFields['signatureTypeSN'] ?? '';
     }
 
-    public function getAdditionalDomains(): array
+    public function getAdditionalDomains()
     {
         $additionalDomains = explode(', ', $this->rawCertificateFields['extensions']['subjectAltName'] ?? '');
 
@@ -55,17 +55,17 @@ class SslCertificate
         }, $additionalDomains);
     }
 
-    public function validFromDate(): Carbon
+    public function validFromDate()
     {
         return Carbon::createFromTimestampUTC($this->rawCertificateFields['validFrom_time_t']);
     }
 
-    public function expirationDate(): Carbon
+    public function expirationDate()
     {
         return Carbon::createFromTimestampUTC($this->rawCertificateFields['validTo_time_t']);
     }
 
-    public function isExpired(): bool
+    public function isExpired()
     {
         return $this->expirationDate()->isPast();
     }
@@ -83,7 +83,7 @@ class SslCertificate
         return true;
     }
 
-    public function isValidUntil(Carbon $carbon, string $url = null): bool
+    public function isValidUntil(Carbon $carbon, string $url = null)
     {
         if ($this->expirationDate()->lte($carbon)) {
             return false;
@@ -92,7 +92,7 @@ class SslCertificate
         return $this->isValid($url);
     }
 
-    public function appliesToUrl(string $url): bool
+    public function appliesToUrl(string $url)
     {
         $host = (new Url($url))->getHostName();
 
@@ -111,7 +111,7 @@ class SslCertificate
         return false;
     }
 
-    protected function wildcardHostCoversHost(string $wildcardHost, string $host): bool
+    protected function wildcardHostCoversHost(string $wildcardHost, string $host)
     {
         if ($host === $wildcardHost) {
             return true;
