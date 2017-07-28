@@ -1,5 +1,5 @@
 {
-    "name": "spatie/ssl-certificate",
+    "name": "cnizzardini/ssl-certificate",
     "description": "A class to easily query the properties of an ssl certificate ",
     "keywords": [
         "spatie",
