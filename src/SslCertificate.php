@@ -14,7 +14,7 @@ class SslCertificate
         return new Downloader();
     }
 
-    public static function createForHostName(string $url, int $timeout = 30)
+    public static function createForHostName($url, $timeout = 30)
     {
         $sslCertificate = Downloader::downloadCertificateFromUrl($url, $timeout);
 
@@ -31,24 +31,25 @@ class SslCertificate
         return $this->rawCertificateFields;
     }
 
-    public function getIssuer(): string
+    public function getIssuer()
     {
         return $this->rawCertificateFields['issuer']['CN'];
     }
 
-    public function getDomain(): string
+    public function getDomain()
     {
-        return $this->rawCertificateFields['subject']['CN'] ?? '';
+        return $this->rawCertificateFields['subject']['CN'] ? $this->rawCertificateFields['subject']['CN'] : '';
     }
 
-    public function getSignatureAlgorithm(): string
+    public function getSignatureAlgorithm()
     {
-        return $this->rawCertificateFields['signatureTypeSN'] ?? '';
+        return $this->rawCertificateFields['signatureTypeSN'] ? $this->rawCertificateFields['signatureTypeSN'] : '';
     }
 
     public function getAdditionalDomains()
     {
-        $additionalDomains = explode(', ', $this->rawCertificateFields['extensions']['subjectAltName'] ?? '');
+        $this->rawCertificateFields['extensions']['subjectAltName'] ? $this->rawCertificateFields['extensions']['subjectAltName'] : '';
+        $additionalDomains = explode(', ', $this->rawCertificateFields['extensions']['subjectAltName']);
 
         return array_map(function (string $domain) {
             return str_replace('DNS:', '', $domain);
@@ -77,13 +78,13 @@ class SslCertificate
         }
 
         if (! empty($url)) {
-            return $this->appliesToUrl($url ?? $this->getDomain());
+            return $this->appliesToUrl($url ? $url : $this->getDomain());
         }
 
         return true;
     }
 
-    public function isValidUntil(Carbon $carbon, string $url = null)
+    public function isValidUntil($carbon, string $url = null)
     {
         if ($this->expirationDate()->lte($carbon)) {
             return false;
@@ -92,7 +93,7 @@ class SslCertificate
         return $this->isValid($url);
     }
 
-    public function appliesToUrl(string $url)
+    public function appliesToUrl($url)
     {
         $host = (new Url($url))->getHostName();
 

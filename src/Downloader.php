@@ -18,7 +18,7 @@ class Downloader
      *
      * @return $this
      */
-    public function usingPort(int $port)
+    public function usingPort($port)
     {
         $this->port = $port;
 
@@ -30,14 +30,14 @@ class Downloader
      *
      * @return $this
      */
-    public function setTimeout(int $timeOutInSeconds)
+    public function setTimeout($timeOutInSeconds)
     {
         $this->timeout = $timeOutInSeconds;
 
         return $this;
     }
 
-    public function forHost(string $hostName)
+    public function forHost($hostName)
     {
         $hostName = (new Url($hostName))->getHostName();
 
@@ -79,7 +79,7 @@ class Downloader
         return new SslCertificate($certificateFields);
     }
 
-    public static function downloadCertificateFromUrl(string $url, int $timeout = 30)
+    public static function downloadCertificateFromUrl($url, $timeout = 30)
     {
         return (new static())
             ->setTimeout($timeout)

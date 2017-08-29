@@ -12,7 +12,7 @@ class Url
     /** @var array */
     protected $parsedUrl;
 
-    public function __construct(string $url)
+    public function __construct($url)
     {
         if (! starts_with($url, ['http://', 'https://', 'ssl://'])) {
             $url = "https://{$url}";
